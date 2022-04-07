@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+import datetime
 # Create your models here.
 class Article(models.Model):
     title = models.CharField(max_length=255)

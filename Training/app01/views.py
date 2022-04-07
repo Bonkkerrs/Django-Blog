@@ -3,18 +3,26 @@ from app01 import models
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-def timer(request):
-    return render
-
 category_list = models.Category.objects.filter(set_as_top_menu=True).order_by('position_index')
 
 def index(request):
-    return render(request,'base.html',{'category_list':category_list})
+    category_obj = models.Category.objects.get(position_index=1)
+    article_list = models.Article.objects.filter(status='published')
+    return render(request, 'bbs/index.html', {'category_list': category_list,
+                                              'category_obj': category_obj,
+                                              'article_list': article_list})
+
 
 def category(request,id):
     category_obj = models.Category.objects.get(id=id)
-    return render(request,'base.html',{'category_list':category_list,
-                                       'category_obj':category_obj})
+    if category_obj.position_index == 1:
+        article_list = models.Article.objects.filter(status='published')
+    else:
+        article_list = models.Article.objects.filter(category_id = category_obj.id,status='published')
+
+    return render(request,'bbs/index.html',{'category_list':category_list,
+                                       'category_obj':category_obj,
+                                       'article_list':article_list})
 
 def acc_login(request):
     if request.method == 'POST':
