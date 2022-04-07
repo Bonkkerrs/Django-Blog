@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app01'
+    'app01',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +64,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'custom': 'templatetags.custom',  # 添加位置
+            }
         },
     },
 ]
@@ -120,7 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,"statics")
+    os.path.join(BASE_DIR,"statics"),
+    os.path.join(BASE_DIR,"uploads")
 ]
 
 LOGIN_URL ='/login/'

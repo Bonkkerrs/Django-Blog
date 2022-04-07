@@ -1,4 +1,23 @@
 {% extends 'base.html' %}
+{% load custom %}
 {% block page-container %}
-    {{article_list}}
+    <div class="wrap-left">
+        {% for article in article_list %}
+        <div class="article-box">
+            <div class="article-head-img">
+                <img src="/static/{{article.head_img | truncate_url }}">
+            </div>
+            <div class="article-brief">
+                {{article.title}}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="wrap-right">
+        hihi
+    </div>
+    <div class="clear-both"></div>
+    <div class="footer">
+        byebye
+    </div>
 {% endblock %}
