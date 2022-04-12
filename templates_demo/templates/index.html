@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Home</title>
+{% endblock %}
+
+{% block con %}
+    <h1>Index</h1>
+    <p>{{ name }}</p>
+    <p>{{ person_list }}</p>
+    <p>{{ alex }}</p>
+    <p>{{ b }}</p>
+    <p>{{ info }}</p>
+    <p>{{ l }}</p>
+    <hr>
+    深度查询
+    <p>{{ l.1 }}</p>
+    <p>{{ person_list.0.name }}</p>
+    <h3>过滤器</h3>
+    {{ now }}
+    <p>{{ now|date:"Y-m-d" }}</p>
+    <p>{{ blank_list|default:"数据为空" }}</p>
+    <p>{{ person_list|length }}</p>
+    <p>{{ 12312311232|filesizeformat }}</p>
+    <p>{{ text|truncatewords:4 }}</p>
+    <p>{{ link|safe }}</p>
+    <p>{{ l.0|add:100 }}</p>
+    <p>{{ info.name|upper }}</p>
+    <h4>for标签</h4>
+    {% for i in l %}
+        <p>{{ forlooop.counter }}{{ i }}</p>
+    {% endfor %}
+
+    {% for key in info %}
+        <p>{{ forlooop.counter }}{{ key }}</p>
+    {% endfor %}
+    {% with person_list.1.name as name %}
+        <p>{{ name|upper }}</p>
+    {% endwith %}
+    <hr>
+    <h4>自定义过滤器</h4>
+    {% load my_tag_filter %}
+    <p>{{ i|multi_filter:20 }}</p>
+    <h4>自定义标签</h4>
+    <p>{% multi_tag 7 9 %}</p>
+
+{% endblock %}
