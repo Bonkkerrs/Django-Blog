@@ -26,11 +26,11 @@
 
             <form action="" method="post">
                 {% csrf_token %}
-                <p>用户名{{ form.name }}</p><span>{{ form.name.errors.0 }}</span>
-                <p>密码{{ form.pwd }}</p><span>{{ form.pwd.errors.0 }}</span>
-                <p>确认密码{{ form.pwd2 }}</p><span>{{ form.pwd2.errors.0 }}</span>
-                <p>邮箱{{ form.email }}</p><span>{{ form.email.errors.0 }}</span>
-                <p>手机号{{ form.tel }}</p><span>{{ form.tel.errors.0 }}</span>
+                <p>用户名{{ form.name }}</p><span class="pull-right error">{{ form.name.errors.0 }}</span>
+                <p>密码{{ form.pwd }}</p><span class="pull-right error">{{ errors.0 }}</span>
+                <p>确认密码{{ form.pwd2 }}</p><span class="pull-right error">{{ form.pwd2.errors.0 }}</span>
+                <p>邮箱{{ form.email }}</p><span class="pull-right error">{{ form.email.errors.0 }}</span>
+                <p>手机号{{ form.tel }}</p><span class="pull-right error">{{ form.tel.errors.0 }}</span>
                 <p><input type="submit"></p>
             </form>
 
