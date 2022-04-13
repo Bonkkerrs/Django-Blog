@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<h3>简单的form</h3>
+<form action="" method="post" enctype="application/x-www-form-urlencoded">
+    用户名<input type="text" name="username">
+    密码<input type="password" name="pwd">
+    <input type="submit">
+</form>
+
+<h3>基于form表单的文件上传</h3>
+<form action="" method="post" enctype="multipart/form-data">
+    用户名<input type="text" name="user">
+    上传文件<input type="file" name="file">
+    <input type="submit">
+</form>
+
+<h3>基于Ajax文件上传</h3>
+<form action="" method="post" enctype="multipart/form-data">
+    用户名<input type="text" name="username" id="user">
+    上传文件<input type="file" name="file" id="file">
+    <input type="button" class="btn" value="上传">
+</form>
+<script>
+    $(".btn").click(function(){
+        var formdata = new FormData();
+        formdata.append("user",$("#user").val());
+        formdata.append("file",$("#file")[0].files[0]);
+        $.ajax({
+            url:'',
+            type:'post',
+            contentType:false,
+            processData:false,
+            data:formdata,
+            success:function(data){
+                console.log('OK')
+            }
+        })
+    })
+</script>
+
+
+
+
+</body>
+</html>

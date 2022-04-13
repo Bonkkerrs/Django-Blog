@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-offset-3">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <p>用户名<input type="text" name="name"></p>
+                <p>密码<input type="password" name="pwd"></p>
+                <p>确认密码<input type="password" name="pwd2"></p>
+                <p>邮箱<input type="email" name="email"></p>
+                <p>手机号<input type="text" name="tel"></p>
+                <p><input type="submit"></p>
+            </form>
+            <hr>
+            <h3>forms组件渲染方式1</h3>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <p>用户名{{ form.name }}</p><span>{{ form.name.errors.0 }}</span>
+                <p>密码{{ form.pwd }}</p><span>{{ form.pwd.errors.0 }}</span>
+                <p>确认密码{{ form.pwd2 }}</p><span>{{ form.pwd2.errors.0 }}</span>
+                <p>邮箱{{ form.email }}</p><span>{{ form.email.errors.0 }}</span>
+                <p>手机号{{ form.tel }}</p><span>{{ form.tel.errors.0 }}</span>
+                <p><input type="submit"></p>
+            </form>
+
+            <hr>
+
+            <h3>forms组件渲染方式2</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div><p>{{ field.label }}{{ field }}</p>
+
+                    </div>
+                {% endfor %}
+                <p><input type="submit"></p>
+            </form>
+
+
+            <hr>
+            <h3>forms组件渲染方式3</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p><input type="submit"></p>
+            </form>
+            </h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>

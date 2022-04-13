@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<h2>This is Index</h2>
+
+<button class="Ajax">Ajax</button>
+<p class="content"></p>
+
+
+
+<hr>
+<input type="text" id="num1">+<input type="text" id="num2">=<input type="text" id="ret"><button class="cal">计算</button>
+<hr>
+
+<form action="">
+    用户名<input type="text" id="user">
+    密码<input type="password" id="pwd">
+    <input type="button" value="Submit" class="login_btn"><span class="error"></span>
+</form>
+<script>
+    $(".Ajax").click(function(){
+        //发送Ajax请求
+        $.ajax({
+            url:'/test_ajax/',
+            type:"get",
+            data:{a:1,b:2},
+            success:function(data){
+                console.log(data);
+                $(".content").html(data)
+            }
+        })
+    })
+
+    $(".cal").click(function(){
+        $.ajax({
+            url:'/cal/',
+            type:'post',
+            data:{
+                "n1":$("#num1").val(),
+                "n2":$("#num2").val()
+            },
+            success:function(data){
+                $("#ret").val(data)
+            }
+        })
+    })
+
+    $(".login_btn").click(function(){
+        $.ajax({
+            url:'/login/',
+            type:'post',
+            data:{
+                "user":$("#user").val(),
+                "pwd":$("#pwd").val(),
+            },
+            success:function(data){
+                data = JSON.parse(data)
+                console.log(data);
+                console.log(typeof data);
+                if (data.user){
+                    location.href="http://www.baidu.com"
+                }
+                else{
+                    $(".error").html(data.msg).css({'color':'red',"margin-left":"10px"})
+                }
+            }
+        })
+    })
+</script>
+
+</body>
+</html>
