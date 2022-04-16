@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程清单</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+</head>
+<body>
+
+<div id="header">
+    <div id="branding">
+        <h1 id="site-name"><a href="/courses/">Courses on Canvas</a></h1>
+    </div>
+    <div id="user-tools">
+                Welcome,
+                <strong>{{ request.user }}</strong>.
+                <a href="/admin/password_change/">Change password</a> /
+                <a href="/logout/">Log out</a>
+        </div>
+</div>
+
+<div class="breadcrumbs">
+    <a href="/courses/">Home</a> › Courses
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" id="content">
+            <h1>Select course for details</h1>
+            <hr>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row">
+
+        <div class="col-md-3 col-md-offset-1">
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge">{{ total }}</span>
+                    {% if sem == active_sem %}
+                        <a href="/courses/"><span>全部</span></a>
+                    {% else %}
+                        {{ sem }}
+                    {% endif %}
+                </li>
+                {% for sem, count in semester_dict.items %}
+                    <li class="list-group-item">
+                        <span class="badge">{{ count }}</span>
+                        {% if sem == active_sem %}
+                            <a href="/courses/semester/{{ sem }}/"><span>{{ sem }}</span></a>
+                        {% else %}
+                             <a href="/courses/semester/{{ sem }}/"><span>{{ sem }}</span></a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <div class="col-md-7">
+            <table class="table table-hover" id="result_list">
+                <thead>
+                <th>序号</th>
+                <th>课程ID</th>
+                <th>学期</th>
+                <th>课程代码</th>
+                <th>课程名称</th>
+                <th>操作</th>
+                </thead>
+                <tbody>
+                {% for k,c in course_list %}
+                    <tr>
+                        <td class="field-course_code">{{ k|add:1 }}</td>
+
+                        <td><a href="/courses/{{ c.course_id }}/">{{ c.course_id }}</a> </td>
+                        <td>{{ c.semester }}</td>
+                        <td>{{ c.course_code }}</td>
+                        <th>{{ c.course_name }}</th>
+                        <th><a href="/courses/{{ c.course_id }}/"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>  /
+                        <a href="/courses/{{ c.course_id }}/downloads/"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span></a></th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+</body>
+</html>

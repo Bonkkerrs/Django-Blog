@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course_name }}文件</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+    {#    <script type="text/javascript" src="/static/admin/js/actions.js"></script>#}
+    {#    <script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>#}
+    {#    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">#}
+</head>
+<body>
+
+<div id="header">
+    <div id="branding">
+        <h1 id="site-name"><a href="/courses/">Files</a></h1>
+    </div>
+    <div id="user-tools">
+        Welcome,
+        <strong>{{ request.user }}</strong>.
+        <a href="/admin/password_change/">Change password</a> /
+        <a href="/logout/">Log out</a>
+    </div>
+</div>
+
+<div class="breadcrumbs">
+    <a href="/index/">Home</a> › <a href="/courses/">Courses</a> › <a href="/courses/{{ course_id }}/">{{ course_name }}</a> › Files
+</div>
+
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" id="content">
+                <h1>Select files to download</h1>
+                <ul class="object-tools">
+                    <li>
+
+                        <a href="" class="historylink">
+                            Refresh
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="/courses/"><span>全部课程</span></a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/courses/{{ course_id }}/"><span>返回课程主页</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-9">
+                <table class="table table-hover" id="result_list">
+                    <thead>
+                    <th>
+                        <fieldset disabled><input type="checkbox" class="disabled" value="all"></fieldset>
+                    </th>
+                    <th>文件名</th>
+                    <th>文件大小</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>状态</th>
+                    </thead>
+                    <tbody>
+                    {% for k,f in file_list %}
+                        <tr></tr>
+                        <td class="action-checkbox"><input type="checkbox" , value="{{ f.id }}"
+                                                           name="selected_downloads"></td>
+                        <td><a href="{{ f.url }}">{{ f.display_name }}</a></td>
+
+                        <td>{{ f.size|filesizeformat }}</td>
+                        <td>{{ f.created_at|date:'Y-m-d H:i' }}</td>
+                        <td>{{ f.updated_at|date:'Y-m-d H:i' }}</td>
+                        <td>{{ f.msg }}</td>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <label for="basic-url">Default downloading directory</label>
+
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon" id="basic-addon1">/Users/david/</span>
+                    <input type="text" class="form-control"
+                           aria-describedby="basic-addon1"
+                           value="Library/CloudStorage/OneDrive-上海交通大学/2021-2022-2学期/{{ course_name }}"
+                           name="directory">
+
+                </div>
+
+            </div>
+            <div class="col-md-5 col-md-push-1">
+                <input type="submit" class="default btn-xs" value="Download">
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+<div id="footer"></div>
+</body>
+</html>

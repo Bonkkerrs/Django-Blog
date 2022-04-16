@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course_name }}作业</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+{#    <script type="text/javascript" src="/static/admin/js/actions.js"></script>#}
+{#    <script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>#}
+{#    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">#}
+</head>
+<body>
+
+<div id="header">
+    <div id="branding">
+        <h1 id="site-name"><a href="/courses/">Assignments</a></h1>
+    </div>
+    <div id="user-tools">
+                Welcome,
+                <strong>{{ request.user }}</strong>.
+                <a href="/admin/password_change/">Change password</a> /
+                <a href="/logout/">Log out</a>
+        </div>
+</div>
+
+<div class="breadcrumbs">
+    <a href="/index/">Home</a> › <a href="/courses/">Courses</a> › {{ course_name }}
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" id="content">
+            <h1>Select assignments for details</h1>
+            <ul class="object-tools">
+                <li>
+                    <a href="" class="historylink">
+                        Refresh
+                    </a>
+                </li>
+            </ul>
+
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="/courses/"><span>全部</span></a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/courses/{{ course_id }}/downloads/"><span>文件</span></a>
+                    </li>
+                </ul>
+            </div>
+        <div class="col-md-6">
+            <table class="table table-hover" id="result_list">
+                <thead>
+                <th>序号</th>
+                <th>作业</th>
+                <th>评分</th>
+                <th>截止时间</th>
+                <th>状态</th>
+                </thead>
+                <tbody>
+                {% for k,a in published %}
+                    <tr></tr>
+                        <td>{{ k|add:1 }}</td>
+                        <td><a href="{{ a.html_url }}">{{ a.name }}</a></td>
+                        <td>{{ a.grade }}</td>
+                        <td>{{ a.due_at|date:'Y-m-d H:i' }}</td>
+                        {% if a.status == '已提交' %}
+                            <td><img src="/static/admin/img/icon-yes.svg" alt="True"></td>
+                            {% elif a.status == '超时未提交' %}
+                            <td><img src="/static/admin/img/icon-no.svg" alt="False"></td>
+                            {% else %}
+                            <td><img src="/static/admin/img/icon-alert.svg" alt="False"></td>
+{#                            <td>{{ a.status }}</td>#}
+
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="col-md-5">
+            <table class="table table-hover" id="result_list">
+                <thead>
+                <th>序号</th>
+                <th>作业</th>
+                <th>解锁时间</th>
+                <th>截止时间</th>
+                </thead>
+                <tbody>
+                {% for k,ua in unpublished %}
+                    <tr>
+                        <td>{{ k|add:1 }}</td>
+                        <td><a href="{{ ua.html_url }}">{{ ua.name }}</a></td>
+                        <td>{{ ua.unlock_at|date:'Y-m-d H:i' }}</td>
+                        <td>{{ ua.due_at|date:'Y-m-d H:i' }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<hr>
+
+
+<div id="footer"></div>
+</body>
+</html>
